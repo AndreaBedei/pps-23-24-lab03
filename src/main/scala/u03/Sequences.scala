@@ -33,7 +33,6 @@ object Sequences: // Essentially, generic linkedlists
         case _ => Nil()
       flatMap(l1)(m)
       
-
     // Lab 03
     def zip[A, B](first: Sequence[A], second: Sequence[B]): Sequence[(A, B)] = (first, second) match
       case (Cons(f, s), Cons(f2, s2)) => Cons((f, f2), zip(s, s2))
@@ -53,14 +52,16 @@ object Sequences: // Essentially, generic linkedlists
       case Nil() => Nil()
       case Cons(h, t) => concat(mapper(h), flatMap(t)(mapper)) 
     
+    def min(l: Sequence[Int]): Optional[Int] = l match
+      case Cons(h, t) if Optional.orElse(min(t), Int.MaxValue) > h => Optional.Just(h)
+      case Cons(h, t) if Optional.orElse(min(t), Int.MaxValue) < h => min(t)
+      case Nil() => Optional.Empty()
 
-    def min(l: Sequence[Int]): Optional[Int] = ???
     
 @main def trySequences =
   import Sequences.* 
   val l = Sequence.Cons(10, Sequence.Cons(20, Sequence.Cons(30, Sequence.Nil())))
-  println(Sequence.sum(l)) // 30
+  //println(Sequence.sum(l)) // 60
 
   import Sequence.*
-
-  println(sum(map(filter(l)(_ >= 20))(_ + 1))) // 21+31 = 52
+  //println(sum(map(filter(l)(_ >= 20))(_ + 1))) // 21+31 = 52
