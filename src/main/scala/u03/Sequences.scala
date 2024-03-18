@@ -2,6 +2,8 @@ package u03
 
 import u02.AnonymousFunctions.l
 import u03.Optionals.Optional
+import u02.Modules.isTeacher
+import u02.Modules.Person
 
 object Sequences: // Essentially, generic linkedlists
   
@@ -57,11 +59,16 @@ object Sequences: // Essentially, generic linkedlists
       case Cons(h, t) if Optional.orElse(min(t), Int.MaxValue) < h => min(t)
       case Nil() => Optional.Empty()
 
+    extension [A, B](l: Sequence[A]) def foldLeft(first: B)(op: (B, A) => B): B = l match 
+      case Cons(h, t) => t.foldLeft(op(first, h))(op)
+      case Nil()      => first
     
 @main def trySequences =
   import Sequences.* 
   val l = Sequence.Cons(10, Sequence.Cons(20, Sequence.Cons(30, Sequence.Nil())))
-  //println(Sequence.sum(l)) // 60
+  println(Sequence.sum(l)) // 60
 
   import Sequence.*
-  //println(sum(map(filter(l)(_ >= 20))(_ + 1))) // 21+31 = 52
+  println(sum(map(filter(l)(_ >= 20))(_ + 1))) // 21+31 = 52
+  val lst = Cons (3, Cons(7, Cons(1, Cons(5, Nil()))))
+  println(foldLeft ( lst ) (0) ( _ - _ ))
