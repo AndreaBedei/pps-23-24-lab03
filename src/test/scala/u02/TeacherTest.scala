@@ -7,7 +7,7 @@ import u03.Sequences.Sequence.*
 import u03.Sequences.*
 import u02.Modules.Person
 
-class ModulesTest:
+class TeacherTest:
 
   @Test def testTeacherCourses() = 
     val persons = Sequence.Cons(
