@@ -43,6 +43,15 @@ object Streams extends App :
       case Cons(head, tail) if pred(head()) => cons(head(), takeWhile(tail())(pred))
       case _ => Empty()
 
+    def fill[A](n: Int)(element: A): Stream[A] = Stream.take(Stream.iterate(element)(x => x))(n)
+
+    val pell: Stream[Int] = 
+      def pellNumber(n: Int): Int = n match 
+        case 0 => 0
+        case 1 => 1
+        case _ => 2 * pellNumber(n - 1) + pellNumber(n - 2)
+      Stream.map(Stream.iterate(0)(_ + 1))(pellNumber)
+
   end Stream
 
 @main def tryStreams =
